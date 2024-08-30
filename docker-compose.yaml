@@ -1,0 +1,20 @@
+---
+services:
+  webui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+    ports:
+      - "7860:7860/tcp"
+    volumes:
+      - ./models:/home/ai/stable-diffusion-webui/models
+      - ./outputs:/home/ai/stable-diffusion-webui/outputs
+    user: 1000:1000
